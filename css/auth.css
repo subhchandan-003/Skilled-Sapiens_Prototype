@@ -1,0 +1,151 @@
+/* Auth Styles */
+.auth-modal-content {
+    max-width: 450px;
+}
+
+.auth-container {
+    padding: 0;
+}
+
+.auth-tabs {
+    display: flex;
+    margin-bottom: 32px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 16px;
+    background: none;
+    border: none;
+    font-weight: 600;
+    color: var(--gray-color);
+    cursor: pointer;
+    position: relative;
+    transition: var(--transition);
+}
+
+.auth-tab::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--primary-color);
+    transform: scaleX(0);
+    transition: var(--transition);
+}
+
+.auth-tab.active {
+    color: var(--primary-color);
+}
+
+.auth-tab.active::after {
+    transform: scaleX(1);
+}
+
+.auth-form h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--dark-color);
+}
+
+.auth-form>p {
+    color: var(--gray-color);
+    margin-bottom: 24px;
+}
+
+.auth-form .form-group {
+    margin-bottom: 20px;
+}
+
+.auth-form .btn {
+    margin-top: 8px;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 24px;
+    color: var(--gray-color);
+}
+
+.auth-footer a {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Social Login */
+.social-login {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-color);
+}
+
+.social-login p {
+    text-align: center;
+    color: var(--gray-color);
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.social-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.social-btn {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.social-btn:hover {
+    border-color: var(--dark-color);
+    background: var(--light-color);
+}
+
+.social-btn.google i {
+    color: #db4437;
+}
+
+.social-btn.facebook i {
+    color: #4267b2;
+}
+
+.social-btn.apple i {
+    color: #000;
+}
+
+/* Autofill Credentials */
+.autofill-credentials {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.autofill-credentials span {
+    font-size: 13px;
+    color: var(--gray-color);
+}
+
+.autofill-credentials .btn {
+    padding: 6px 12px;
+    font-size: 12px;
+}

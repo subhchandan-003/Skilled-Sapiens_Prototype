@@ -1,0 +1,350 @@
+/* Progress Styles */
+.progress-container {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 24px;
+}
+
+.progress-container h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 20px;
+}
+
+/* Circular Progress */
+.circular-progress {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px;
+}
+
+.circular-progress svg {
+    transform: rotate(-90deg);
+}
+
+.circular-progress .bg {
+    fill: none;
+    stroke: var(--border-color);
+    stroke-width: 10;
+}
+
+.circular-progress .progress {
+    fill: none;
+    stroke: var(--primary-color);
+    stroke-width: 10;
+    stroke-linecap: round;
+    stroke-dasharray: 377;
+    stroke-dashoffset: 377;
+    transition: stroke-dashoffset 1s ease;
+}
+
+.circular-progress .percentage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--dark-color);
+}
+
+/* Progress Steps */
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.progress-steps::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--border-color);
+}
+
+.progress-step {
+    position: relative;
+    text-align: center;
+    z-index: 1;
+}
+
+.progress-step-icon {
+    width: 40px;
+    height: 40px;
+    background: white;
+    border: 4px solid var(--border-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    font-weight: 600;
+    color: var(--gray-color);
+    transition: var(--transition);
+}
+
+.progress-step.active .progress-step-icon {
+    border-color: var(--primary-color);
+    background: var(--primary-color);
+    color: white;
+}
+
+.progress-step.completed .progress-step-icon {
+    border-color: var(--secondary-color);
+    background: var(--secondary-color);
+    color: white;
+}
+
+.progress-step h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 4px;
+}
+
+.progress-step span {
+    font-size: 12px;
+    color: var(--gray-color);
+}
+
+/* Milestone Progress */
+.milestone-progress {
+    margin-bottom: 32px;
+}
+
+.milestone-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: var(--light-color);
+    border-radius: var(--radius-md);
+    margin-bottom: 12px;
+}
+
+.milestone-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.milestone-icon.locked {
+    background: var(--border-color);
+    color: var(--gray-color);
+}
+
+.milestone-icon.current {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: white;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.milestone-icon.completed {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.milestone-info {
+    flex: 1;
+}
+
+.milestone-info h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 4px;
+}
+
+.milestone-info p {
+    font-size: 13px;
+    color: var(--gray-color);
+}
+
+.milestone-status {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.milestone-status.locked {
+    color: var(--gray-color);
+}
+
+.milestone-status.current {
+    color: var(--primary-color);
+}
+
+.milestone-status.completed {
+    color: var(--secondary-color);
+}
+
+/* Achievement Cards */
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.achievement-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+}
+
+.achievement-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.achievement-card.locked {
+    opacity: 0.6;
+}
+
+.achievement-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 16px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: white;
+}
+
+.achievement-card.locked .achievement-icon {
+    background: var(--border-color);
+    color: var(--gray-color);
+}
+
+.achievement-card h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 8px;
+}
+
+.achievement-card p {
+    font-size: 13px;
+    color: var(--gray-color);
+    line-height: 1.5;
+}
+
+/* Study Time */
+.study-time-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+}
+
+.study-time-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 20px;
+}
+
+.study-time-display {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0.05));
+    border-radius: var(--radius-lg);
+    margin-bottom: 20px;
+}
+
+.study-time-display .time {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--primary-color);
+    line-height: 1;
+}
+
+.study-time-display .label {
+    font-size: 14px;
+    color: var(--gray-color);
+    margin-top: 8px;
+}
+
+.study-time-compare {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.compare-item {
+    text-align: center;
+}
+
+.compare-item span {
+    display: block;
+    font-size: 14px;
+    color: var(--gray-color);
+    margin-bottom: 4px;
+}
+
+.compare-item strong {
+    font-size: 18px;
+    color: var(--secondary-color);
+}
+
+.compare-item.less strong {
+    color: var(--danger-color);
+}
+
+/* Course Completion Card */
+.completion-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.completion-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--secondary-color), #059669);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+    flex-shrink: 0;
+}
+
+.completion-info h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 4px;
+}
+
+.completion-info p {
+    font-size: 14px;
+    color: var(--gray-color);
+    margin-bottom: 12px;
+}
+
+.completion-info .progress-bar {
+    max-width: 200px;
+}
