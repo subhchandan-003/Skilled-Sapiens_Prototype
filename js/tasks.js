@@ -33,11 +33,12 @@ function loadTasksPage() {
             <div class="milestone-card ${isCompleted ? 'completed' : ''} ${isCurrent ? 'current' : ''} ${isLocked ? 'locked' : ''}">
                 <div class="milestone-header">
                     <div class="milestone-badge">
-                        ${isCompleted ? '<i class="fas fa-check-circle"></i>' : isLocked ? '<i class="fas fa-lock"></i>' : milestone.badge}
+                        ${isCompleted ? '<i class="fas fa-check-circle"></i>' : isLocked ? '<i class="fas fa-lock"></i>' : milestone.badge.split(' ')[0]}
                     </div>
                     <div class="milestone-info">
                         <h3>${milestone.title}</h3>
                         <p>${milestone.description}</p>
+                        <span class="badge-label">${milestone.badge}</span>
                     </div>
                 </div>
                 
