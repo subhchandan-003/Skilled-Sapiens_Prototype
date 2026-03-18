@@ -1,7 +1,7 @@
 // Skilled Sapiens - Data Layer (India MBA Edition)
 
 // Force fresh data on version change
-const DATA_VERSION = '3.0';
+const DATA_VERSION = '3.1';
 if (localStorage.getItem('dataVersion') !== DATA_VERSION) {
     localStorage.clear();
     localStorage.setItem('dataVersion', DATA_VERSION);
@@ -582,8 +582,8 @@ const coursesData = [
         shortDescription: "Master corporate finance from fundamentals to advanced valuation",
         category: "finance",
         level: "Intermediate",
-        price: 12999,
-        originalPrice: 18000,
+        price: 4999,
+        originalPrice: 7000,
         duration: 36,
         thumbnail: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=500&fit=crop",
         instructor: {
@@ -640,8 +640,8 @@ const coursesData = [
         shortDescription: "Build brand strategy with India's top marketing frameworks",
         category: "marketing",
         level: "Beginner",
-        price: 9999,
-        originalPrice: 14000,
+        price: 3499,
+        originalPrice: 5000,
         duration: 28,
         thumbnail: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=500&fit=crop",
         instructor: {
@@ -680,8 +680,8 @@ const coursesData = [
         shortDescription: "Modern HR management for India's growing workforce",
         category: "hr-management",
         level: "Beginner",
-        price: 7999,
-        originalPrice: 12000,
+        price: 2999,
+        originalPrice: 4500,
         duration: 24,
         thumbnail: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=500&fit=crop",
         instructor: {
@@ -704,8 +704,8 @@ const coursesData = [
         shortDescription: "Data-driven decisions using Power BI and Excel analytics",
         category: "analytics",
         level: "Intermediate",
-        price: 14999,
-        originalPrice: 20000,
+        price: 4999,
+        originalPrice: 7500,
         duration: 42,
         thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&fit=crop",
         instructor: {
@@ -745,8 +745,8 @@ const coursesData = [
         shortDescription: "Lean operations and supply chain for Indian businesses",
         category: "operations",
         level: "Intermediate",
-        price: 11499,
-        originalPrice: 16000,
+        price: 3999,
+        originalPrice: 6000,
         duration: 32,
         thumbnail: "https://images.unsplash.com/photo-1553413077-190dd305871c?w=500&fit=crop",
         instructor: {
@@ -769,8 +769,8 @@ const coursesData = [
         shortDescription: "Build and scale your startup in the Indian ecosystem",
         category: "entrepreneurship",
         level: "Beginner",
-        price: 8499,
-        originalPrice: 13000,
+        price: 2999,
+        originalPrice: 4500,
         duration: 26,
         thumbnail: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=500&fit=crop",
         instructor: {
@@ -793,8 +793,8 @@ const coursesData = [
         shortDescription: "Investment banking and M&A for finance professionals",
         category: "finance",
         level: "Advanced",
-        price: 13999,
-        originalPrice: 20000,
+        price: 4499,
+        originalPrice: 6500,
         duration: 48,
         thumbnail: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=500&fit=crop",
         instructor: {
@@ -817,8 +817,8 @@ const coursesData = [
         shortDescription: "Executive leadership and team management for Indian leaders",
         category: "leadership",
         level: "Beginner",
-        price: 6999,
-        originalPrice: 10000,
+        price: 2499,
+        originalPrice: 3500,
         duration: 20,
         thumbnail: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&fit=crop",
         instructor: {
