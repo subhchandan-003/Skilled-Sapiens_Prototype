@@ -38,7 +38,7 @@ function showPage(page) {
         case 'mentor':
             loadMentorPage();
             break;
-        case 'my-learning':
+        case 'myLearning':
             if (!currentUser) { showAuthModal('login'); return; }
             loadMyLearning();
             break;
