@@ -430,46 +430,158 @@ function addToWishlist(courseId) {
 }
 
 // ─── My Learning page ─────────────────────────────────────────────────────
-function loadMyLearning() {
+let _learningTab = 'in-progress';
+
+function getLessonStats(course) {
+    if (!course.curriculum) return { total: 0, completed: 0, nextLesson: null, nextSection: null };
+    let total = 0, completed = 0, nextLesson = null, nextSection = null;
+    for (const section of course.curriculum) {
+        for (const lesson of section.lessons) {
+            total++;
+            if (lesson.completed) completed++;
+            else if (!nextLesson) { nextLesson = lesson; nextSection = section; }
+        }
+    }
+    return { total, completed, nextLesson, nextSection };
+}
+
+function loadMyLearning(tab) {
+    if (tab) _learningTab = tab;
     const content = document.getElementById('learningContent');
     if (!content || !currentUser) return;
+
     const enrolled = courses.filter(c => currentUser.enrolledCourses?.includes(c.id));
 
     if (enrolled.length === 0) {
         content.innerHTML = `
             <div class="empty-state">
-                <i class="fas fa-book-open"></i>
-                <h3>No courses yet</h3>
-                <p>Enrol in a course to start learning</p>
-                <button class="btn btn-primary" onclick="showPage('courses')">Explore Courses</button>
+                <i class="fas fa-book-open" style="font-size:3rem;color:var(--primary-color);margin-bottom:1rem;"></i>
+                <h3>No courses enrolled yet</h3>
+                <p>Browse our MBA courses and start your journey today.</p>
+                <button class="btn btn-primary" onclick="showPage('courses')">
+                    <i class="fas fa-compass"></i> Explore Courses
+                </button>
             </div>`;
         return;
     }
 
-    content.innerHTML = enrolled.map(course => `
-        <div class="progress-card">
-            <div class="progress-card-image">
-                <img src="${course.thumbnail}" alt="${course.title}">
-            </div>
-            <div class="progress-card-content">
-                <h3>${course.title}</h3>
-                <p>${course.instructor.name} · ${formatCategory(course.category)}</p>
-                <div class="progress-info">
-                    <span>Progress</span>
-                    <strong>${course.progress || 0}%</strong>
+    // Compute per-course stats
+    const enriched = enrolled.map(c => ({ ...c, _stats: getLessonStats(c) }));
+    const inProgress = enriched.filter(c => c._stats.total === 0 || c._stats.completed < c._stats.total);
+    const completedList = enriched.filter(c => c._stats.total > 0 && c._stats.completed === c._stats.total);
+
+    // Overall learning stats
+    const totalHours = enriched.reduce((sum, c) => {
+        const pct = c._stats.total ? c._stats.completed / c._stats.total : 0;
+        return sum + Math.round(pct * (c.duration || 0));
+    }, 0);
+    const progress = userProgress.find(p => p.userId === currentUser.id);
+    const streak = progress?.streak || 0;
+
+    const statsHtml = `
+        <div class="ml-stats-bar">
+            <div class="ml-stat">
+                <i class="fas fa-layer-group"></i>
+                <div>
+                    <strong>${enrolled.length}</strong>
+                    <span>Courses Enrolled</span>
                 </div>
-                <div class="progress-bar"><div class="progress-fill" style="width:${course.progress || 0}%"></div></div>
-                <button class="btn btn-primary btn-sm mt-2" onclick="continueCourse(${course.id})">
-                    <i class="fas fa-play"></i> Continue
-                </button>
             </div>
-        </div>`).join('');
+            <div class="ml-stat">
+                <i class="fas fa-clock"></i>
+                <div>
+                    <strong>${totalHours}h</strong>
+                    <span>Hours Learned</span>
+                </div>
+            </div>
+            <div class="ml-stat">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <strong>${completedList.length}</strong>
+                    <span>Completed</span>
+                </div>
+            </div>
+            <div class="ml-stat">
+                <i class="fas fa-fire"></i>
+                <div>
+                    <strong>${streak} days</strong>
+                    <span>Current Streak</span>
+                </div>
+            </div>
+        </div>`;
+
+    const toShow = _learningTab === 'completed' ? completedList : inProgress;
+
+    if (toShow.length === 0) {
+        const emptyMsg = _learningTab === 'completed'
+            ? 'No completed courses yet — keep going!'
+            : 'All caught up! All enrolled courses are complete.';
+        content.innerHTML = statsHtml + `
+            <div class="empty-state" style="margin-top:2rem;">
+                <i class="fas fa-${_learningTab === 'completed' ? 'trophy' : 'check-circle'}" style="font-size:2.5rem;color:var(--primary-color);margin-bottom:1rem;"></i>
+                <p>${emptyMsg}</p>
+            </div>`;
+        return;
+    }
+
+    const cardsHtml = toShow.map(course => {
+        const { total, completed, nextLesson, nextSection } = course._stats;
+        const pct = total ? Math.round((completed / total) * 100) : 0;
+        const isComplete = pct === 100;
+        const levelColors = { Beginner: '#10b981', Intermediate: '#f59e0b', Advanced: '#ef4444' };
+        const levelColor = levelColors[course.level] || '#6366f1';
+        const instructorInitials = createInitialsAvatarHTML(course.instructor.name, 36);
+
+        return `
+            <div class="ml-course-card">
+                <div class="ml-course-thumb">
+                    <img src="${course.thumbnail}" alt="${course.title}" loading="lazy">
+                    ${isComplete ? '<div class="ml-complete-ribbon"><i class="fas fa-check"></i> Complete</div>' : ''}
+                </div>
+                <div class="ml-course-body">
+                    <div class="ml-course-meta">
+                        <span class="ml-level-badge" style="background:${levelColor}20;color:${levelColor}">${course.level}</span>
+                        <span class="ml-category">${formatCategory(course.category)}</span>
+                    </div>
+                    <h3 class="ml-course-title">${course.title}</h3>
+                    <div class="ml-instructor-row">
+                        ${instructorInitials}
+                        <span>${course.instructor.name}</span>
+                        <span class="ml-rating"><i class="fas fa-star"></i> ${course.rating}</span>
+                    </div>
+                    <div class="ml-progress-section">
+                        <div class="ml-progress-labels">
+                            <span>${completed} of ${total} lessons</span>
+                            <strong>${pct}%</strong>
+                        </div>
+                        <div class="progress-bar ml-progress-bar">
+                            <div class="progress-fill" style="width:${pct}%"></div>
+                        </div>
+                    </div>
+                    ${nextLesson && !isComplete ? `
+                    <div class="ml-next-lesson">
+                        <i class="fas fa-play-circle"></i>
+                        <span>Next: <em>${nextLesson.title}</em></span>
+                    </div>` : ''}
+                    <div class="ml-course-actions">
+                        ${isComplete
+                            ? `<button class="btn btn-success" onclick="showCourseDetail(${course.id})"><i class="fas fa-trophy"></i> View Certificate</button>
+                               <button class="btn btn-outline" onclick="showCourseDetail(${course.id})">Review Course</button>`
+                            : `<button class="btn btn-primary" onclick="continueCourse(${course.id})"><i class="fas fa-play"></i> Continue Learning</button>
+                               <button class="btn btn-outline" onclick="showCourseDetail(${course.id})">Details</button>`
+                        }
+                    </div>
+                </div>
+            </div>`;
+    }).join('');
+
+    content.innerHTML = statsHtml + `<div class="ml-course-grid">${cardsHtml}</div>`;
 }
 
 function switchLearningTab(tab) {
     document.querySelectorAll('.learning-tab').forEach(t => t.classList.remove('active'));
     event.target.classList.add('active');
-    loadMyLearning();
+    loadMyLearning(tab);
 }
 
 // ─── Load Courses Page ─────────────────────────────────────────────────────
