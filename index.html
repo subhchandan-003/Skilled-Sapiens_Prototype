@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skilled Sapiens - Learning Management System</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/courses.css">
+    <link rel="stylesheet" href="css/video-player.css">
+    <link rel="stylesheet" href="css/quiz.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/analytics.css">
+    <link rel="stylesheet" href="css/progress.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo" onclick="showPage('home')">
+                <img src="Skilled Sapiens logo.jpeg" alt="Skilled Sapiens" class="nav-logo-img">
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <a href="#" onclick="showPage('home')" class="nav-link active" data-page="home">Home</a>
+                <a href="#" onclick="showPage('courses')" class="nav-link" data-page="courses">Courses</a>
+                <a href="#" onclick="showPage('dashboard')" class="nav-link" data-page="dashboard">Dashboard</a>
+                <a href="#" onclick="showPage('my-learning')" class="nav-link" data-page="my-learning">My Learning</a>
+                <a href="#" onclick="showPage('tasks')" class="nav-link" data-page="tasks">Tasks</a>
+                <a href="#" onclick="showPage('mentor')" class="nav-link" data-page="mentor">Mentor</a>
+            </div>
+            <div class="nav-auth" id="navAuth">
+                <button class="btn btn-outline" onclick="showAuthModal('login')">Login</button>
+                <button class="btn btn-primary" onclick="showAuthModal('register')">Get Started</button>
+            </div>
+            <div class="nav-user" id="navUser" style="display: none;">
+                <div class="user-menu" onclick="toggleUserDropdown()">
+                    <div class="user-avatar-initials" id="userAvatarInitials"></div>
+                    <span class="user-name" id="userName">User</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="#" onclick="showPage('profile')"><i class="fas fa-user"></i> Profile</a>
+                    <a href="#" onclick="showPage('my-learning')"><i class="fas fa-book"></i> My Learning</a>
+                    <a href="#" onclick="showPage('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" onclick="showPage('mentor')" id="mentorLink"><i class="fas fa-chalkboard-teacher"></i>
+                        Mentor Panel</a>
+                    <a href="#" onclick="showPage('admin')" id="adminLink"><i class="fas fa-cog"></i> Admin Panel</a>
+                    <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+            <button class="nav-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Auth Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content auth-modal-content">
+            <button class="modal-close" onclick="closeAuthModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="auth-brand">
+                <img src="Skilled Sapiens logo.jpeg" alt="Skilled Sapiens" class="auth-logo">
+                <span>Skilled Sapiens</span>
+            </div>
+            <div class="auth-container">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login" onclick="switchAuthTab('login')">Login</button>
+                    <button class="auth-tab" data-tab="register" onclick="switchAuthTab('register')">Register</button>
+                </div>
+
+                <!-- LOGIN FORM -->
+                <form id="loginForm" class="auth-form" onsubmit="handleLogin(event)">
+                    <h2>Welcome Back! 👋</h2>
+                    <p>Sign in to continue your MBA journey</p>
+
+                    <div class="quick-login-section">
+                        <p class="quick-label">Quick Demo Login</p>
+                        <div class="quick-login-cards">
+                            <button type="button" class="quick-card student-card"
+                                onclick="autofillLogin('arjun.sharma@example.com', 'password123')">
+                                <div class="quick-card-avatar" style="background:#6366f1">AS</div>
+                                <div>
+                                    <strong>Student</strong>
+                                    <span>Arjun Sharma</span>
+                                </div>
+                            </button>
+                            <button type="button" class="quick-card mentor-card"
+                                onclick="autofillLogin('mentor@skilledsapiens.com', 'mentor123')">
+                                <div class="quick-card-avatar" style="background:#10b981">RK</div>
+                                <div>
+                                    <strong>Mentor</strong>
+                                    <span>Prof. Rajesh Kumar</span>
+                                </div>
+                            </button>
+                            <button type="button" class="quick-card admin-card"
+                                onclick="autofillLogin('admin@skilledsapiens.com', 'admin123')">
+                                <div class="quick-card-avatar" style="background:#f59e0b">PM</div>
+                                <div>
+                                    <strong>Admin</strong>
+                                    <span>Priya Menon</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="auth-divider"><span>or sign in manually</span></div>
+
+                    <div class="form-group">
+                        <label for="loginEmail">Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="loginEmail" required placeholder="yourname@example.com">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="loginPassword" required placeholder="Enter your password">
+                            <button type="button" class="toggle-password" onclick="togglePasswordVisibility('loginPassword', this)">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-row-inline">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="rememberMe">
+                            <label for="rememberMe">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-link">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block login-btn">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </button>
+                </form>
+
+                <!-- REGISTER FORM -->
+                <form id="registerForm" class="auth-form" style="display: none;" onsubmit="handleRegister(event)">
+                    <h2>Create Account ✨</h2>
+                    <p>Start your MBA learning journey today</p>
+                    <div class="form-group">
+                        <label for="registerName">Full Name</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" id="registerName" required placeholder="e.g. Rahul Verma">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="registerEmail" required placeholder="yourname@example.com">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerRole">I am a</label>
+                        <select id="registerRole">
+                            <option value="student">Student</option>
+                            <option value="mentor">Mentor / Instructor</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="registerPassword" required placeholder="Min. 8 characters">
+                            <button type="button" class="toggle-password" onclick="togglePasswordVisibility('registerPassword', this)">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerConfirm">Confirm Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="registerConfirm" required placeholder="Re-enter your password">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block login-btn">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+                    <p class="auth-footer">By registering you agree to our <a href="#">Terms</a> &amp; <a href="#">Privacy Policy</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main id="mainContent">
+        <!-- Home Page -->
+        <div id="homePage" class="page active">
+            <section class="hero">
+                <div class="hero-background">
+                    <div class="hero-shapes">
+                        <div class="shape shape-1"></div>
+                        <div class="shape shape-2"></div>
+                    </div>
+                </div>
+                <div class="hero-content">
+                    <span class="hero-badge"><i class="fas fa-star"></i> #1 Learning Platform</span>
+                    <h1>Master MBA Skills<br>Advance Your Career</h1>
+                    <p>Learn Finance, Marketing, HR &amp; Strategy from India's top management professionals. Industry-relevant courses with live mentoring and real-world case studies.</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary btn-lg" onclick="showPage('courses')">
+                            <i class="fas fa-play"></i> Explore Courses
+                        </button>
+                        <button class="btn btn-outline btn-lg" onclick="showAuthModal('register')">
+                            <i class="fas fa-user-plus"></i> Get Started Free
+                        </button>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number">10K+</span>
+                            <span class="stat-label">Students</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">500+</span>
+                            <span class="stat-label">Courses</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">100+</span>
+                            <span class="stat-label">Mentors</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">95%</span>
+                            <span class="stat-label">Success Rate</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features -->
+            <section class="features">
+                <div class="container">
+                    <h2 class="section-title">Why Choose Skilled Sapiens?</h2>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-video"></i></div>
+                            <h3>Video Lessons</h3>
+                            <p>High-quality video content with HD streaming</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-certificate"></i></div>
+                            <h3>Certificates</h3>
+                            <p>Earn recognized certificates upon completion</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-users"></i></div>
+                            <h3>Expert Mentors</h3>
+                            <p>Learn from industry professionals</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-tasks"></i></div>
+                            <h3>Micro-tasks</h3>
+                            <p>Small wins between sessions for retention</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-bell"></i></div>
+                            <h3>Smart Alerts</h3>
+                            <p>Never miss a deadline with intelligent reminders</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="fas fa-user-friends"></i></div>
+                            <h3>Study Buddies</h3>
+                            <p>Connect with peers for collaborative learning</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Popular Courses -->
+            <section class="popular-courses">
+                <div class="container">
+                    <h2 class="section-title">Popular Courses</h2>
+                    <div class="courses-grid" id="popularCoursesGrid"></div>
+                    <div class="section-cta">
+                        <button class="btn btn-primary" onclick="showPage('courses')">View All Courses <i
+                                class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA -->
+            <section class="cta">
+                <div class="container">
+                    <div class="cta-content">
+                        <h2>Ready to Start Learning?</h2>
+                        <p>Join thousands of students already learning on Skilled Sapiens</p>
+                        <button class="btn btn-primary btn-lg" onclick="showAuthModal('register')">
+                            Get Started Now <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Student Dashboard Page -->
+        <div id="dashboardPage" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1>Student Cohort Dashboard</h1>
+                    <p>Track your progress and stay on track</p>
+                </div>
+
+                <!-- Dashboard Grid Layout -->
+                <div class="dashboard-grid-layout">
+                    <!-- Left Column: Progress + Next Action -->
+                    <div class="dashboard-column">
+                        <!-- Progress Strip -->
+                        <div class="dashboard-card progress-strip-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-chart-line"></i> Your Progress</h3>
+                            </div>
+                            <div class="progress-strip">
+                                <div class="week-markers">
+                                    <span class="week completed">W1</span>
+                                    <span class="week completed">W2</span>
+                                    <span class="week completed">W3</span>
+                                    <span class="week completed">W4</span>
+                                    <span class="week completed">W5</span>
+                                    <span class="week current">W6</span>
+                                    <span class="week">W7</span>
+                                    <span class="week">W8</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%"></div>
+                                </div>
+                                <div class="progress-stats">
+                                    <span><strong>65%</strong> Complete</span>
+                                    <span><strong>6/8</strong> Weeks</span>
+                                </div>
+                            </div>
+                            <div class="skill-score">
+                                <span class="score-label">Skill Score</span>
+                                <span class="score-value">72</span>
+                            </div>
+                        </div>
+
+                        <!-- Next Action Card -->
+                        <div class="dashboard-card next-action-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-play-circle"></i> Next Micro-task</h3>
+                            </div>
+                            <div class="next-action-content" id="nextTaskContent">
+                                <!-- Dynamic content -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Middle Column: Milestones + Tasks -->
+                    <div class="dashboard-column">
+                        <!-- Current Milestone -->
+                        <div class="dashboard-card milestone-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-bullseye"></i> Current Milestone</h3>
+                                <span class="badge badge-primary">Milestone 3</span>
+                            </div>
+                            <div class="milestone-content" id="milestoneContent">
+                                <!-- Dynamic content -->
+                            </div>
+                            <div class="milestone-tasks" id="milestoneTasks">
+                                <!-- Dynamic content -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Alerts + Calendar -->
+                    <div class="dashboard-column">
+                        <!-- Alerts Preview -->
+                        <div class="dashboard-card alerts-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-bell"></i> Alert Center</h3>
+                                <span class="alert-count" id="alertCount">2</span>
+                            </div>
+                            <div class="alerts-list" id="alertsList">
+                                <!-- Dynamic content -->
+                            </div>
+                            <button class="btn btn-outline btn-sm" onclick="showPage('alerts')">View All Alerts</button>
+                        </div>
+
+                        <!-- Session Calendar -->
+                        <div class="dashboard-card calendar-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-calendar-alt"></i> Upcoming Sessions</h3>
+                            </div>
+                            <div class="sessions-list" id="sessionsList">
+                                <!-- Dynamic content -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Row: Social Features -->
+                <div class="dashboard-social-row">
+                    <!-- Study Buddies -->
+                    <div class="dashboard-card social-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-user-friends"></i> Study Buddies</h3>
+                        </div>
+                        <div class="buddies-list" id="buddiesList">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+
+                    <!-- Leaderboard -->
+                    <div class="dashboard-card leaderboard-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-trophy"></i> Leaderboard</h3>
+                        </div>
+                        <div class="leaderboard-list" id="leaderboardList">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+
+                    <!-- Weekly Challenge -->
+                    <div class="dashboard-card challenge-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-flag"></i> Weekly Challenge</h3>
+                        </div>
+                        <div class="challenge-content" id="challengeContent">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+
+                    <!-- Badges -->
+                    <div class="dashboard-card badges-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-award"></i> Your Badges</h3>
+                        </div>
+                        <div class="badges-list" id="badgesList">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tasks Page -->
+        <div id="tasksPage" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1>Micro-tasks & Milestones</h1>
+                    <p>Complete tasks to progress through your course</p>
+                </div>
+                <div class="tasks-container" id="tasksContainer">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Alerts Page -->
+        <div id="alertsPage" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1>Alert Center</h1>
+                    <p>Stay informed about your progress</p>
+                </div>
+                <div class="alerts-container" id="alertsContainer">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Mentor Page -->
+        <div id="mentorPage" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1>Mentor Dashboard</h1>
+                    <p>Manage your cohort and students</p>
+                </div>
+                <div class="mentor-dashboard">
+                    <!-- Follow-up Queue -->
+                    <div class="mentor-section">
+                        <h2><i class="fas fa-exclamation-triangle"></i> Follow-up Queue</h2>
+                        <div class="followup-queue" id="followupQueue">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+
+                    <!-- Review Queue -->
+                    <div class="mentor-section">
+                        <h2><i class="fas fa-check-circle"></i> Review Queue</h2>
+                        <div class="review-queue" id="reviewQueue">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+
+                    <!-- Bulk Message -->
+                    <div class="mentor-section">
+                        <h2><i class="fas fa-envelope"></i> Bulk Message</h2>
+                        <div class="bulk-message-form">
+                            <div class="form-group">
+                                <label>Select Segment</label>
+                                <select id="messageSegment">
+                                    <option>All Students</option>
+                                    <option>At Risk</option>
+                                    <option>Inactive (3+ days)</option>
+                                    <option>Pending Milestone</option>
+                                    <option>Missed Last Session</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Template</label>
+                                <select id="messageTemplate">
+                                    <option>Session Reminder</option>
+                                    <option>Milestone Due Soon</option>
+                                    <option>Inactivity Check</option>
+                                    <option>Custom Message</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary">Send Message</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Courses Page -->
+        <div id="coursesPage" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1>Explore Courses</h1>
+                    <p>Discover courses from expert instructors</p>
+                </div>
+                <div class="courses-grid" id="coursesGrid"></div>
+            </div>
+        </div>
+
+        <!-- My Learning Page -->
+        <div id="myLearningPage" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1>My Learning</h1>
+                    <p>Track your progress and continue learning</p>
+                </div>
+                <div class="learning-tabs">
+                    <button class="learning-tab active" onclick="switchLearningTab('in-progress')">In Progress</button>
+                    <button class="learning-tab" onclick="switchLearningTab('completed')">Completed</button>
+                </div>
+                <div class="learning-content" id="learningContent"></div>
+            </div>
+        </div>
+
+        <!-- Course Detail Page -->
+        <div id="courseDetailPage" class="page">
+            <div class="container">
+                <button class="btn btn-outline" onclick="showPage('courses')">
+                    <i class="fas fa-arrow-left"></i> Back to Courses
+                </button>
+                <div class="course-detail" id="courseDetail"></div>
+            </div>
+        </div>
+
+        <!-- Video Player Page -->
+        <div id="videoPlayerPage" class="page">
+            <div class="video-player-container">
+                <div class="video-main">
+                    <div class="video-wrapper" id="videoWrapper">
+                        <video id="mainVideo" controls>
+                            <source src="" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="video-info">
+                        <h2 id="videoTitle">Course Title</h2>
+                        <div class="video-actions">
+                            <button class="btn btn-outline" onclick="markComplete()">
+                                <i class="fas fa-check"></i> Mark Complete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-sidebar">
+                    <div class="course-content-list">
+                        <h3>Course Content</h3>
+                        <div id="lessonList"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Page -->
+        <div id="quizPage" class="page">
+            <div class="container">
+                <div class="quiz-container">
+                    <div class="quiz-header">
+                        <h2 id="quizTitle">Quiz</h2>
+                        <div class="quiz-progress">
+                            <span>Question <span id="currentQuestion">1</span> of <span
+                                    id="totalQuestions">10</span></span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="quizProgressFill"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quiz-content" id="quizContent"></div>
+                    <div class="quiz-navigation">
+                        <button class="btn btn-outline" id="prevQuestionBtn" onclick="prevQuestion()">Previous</button>
+                        <button class="btn btn-primary" id="nextQuestionBtn" onclick="nextQuestion()">Next</button>
+                    </div>
+                </div>
+                <div class="quiz-results" id="quizResults" style="display: none;">
+                    <div class="results-card">
+                        <div class="results-icon" id="resultsIcon"><i class="fas fa-trophy"></i></div>
+                        <h2>Quiz Complete!</h2>
+                        <div class="results-score">
+                            <span class="score-number" id="scoreNumber">0</span>
+                            <span class="score-total">/ <span id="scoreTotal">10</span></span>
+                        </div>
+                        <p id="resultsMessage">Great job!</p>
+                        <div class="results-actions">
+                            <button class="btn btn-primary" onclick="retakeQuiz()">Retake Quiz</button>
+                            <button class="btn btn-outline" onclick="continueCourse()">Continue Course</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Page -->
+        <div id="adminPage" class="page">
+            <div class="container">
+                <div class="page-header">
+                    <h1>Admin Dashboard</h1>
+                    <p>Manage your platform</p>
+                </div>
+                <div class="admin-tabs">
+                    <button class="admin-tab active" onclick="switchAdminTab('overview')">Overview</button>
+                    <button class="admin-tab" onclick="switchAdminTab('courses')">Courses</button>
+                    <button class="admin-tab" onclick="switchAdminTab('users')">Users</button>
+                </div>
+                <div class="admin-content" id="adminOverview">
+                    <div class="admin-stats">
+                        <div class="stat-card"><i class="fas fa-users"></i>
+                            <div><span class="stat-value" id="totalUsers">0</span><span class="stat-label">Total
+                                    Users</span></div>
+                        </div>
+                        <div class="stat-card"><i class="fas fa-book"></i>
+                            <div><span class="stat-value" id="totalAdminCourses">0</span><span
+                                    class="stat-label">Courses</span></div>
+                        </div>
+                        <div class="stat-card"><i class="fas fa-user-graduate"></i>
+                            <div><span class="stat-value" id="totalEnrollments">0</span><span
+                                    class="stat-label">Enrollments</span></div>
+                        </div>
+                        <div class="stat-card"><i class="fas fa-star"></i>
+                            <div><span class="stat-value" id="avgRating">0</span><span class="stat-label">Avg
+                                    Rating</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-content" id="adminCourses" style="display: none;">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Course</th>
+                                    <th>Instructor</th>
+                                    <th>Students</th>
+                                    <th>Rating</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="coursesTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="admin-content" id="adminUsers" style="display: none;">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Courses</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Page -->
+        <div id="profilePage" class="page">
+            <div class="container">
+                <div class="profile-container">
+                    <div class="profile-header-card">
+                        <div class="profile-avatar-large" id="profileAvatarLarge"></div>
+                        <div class="profile-info">
+                            <h2 id="profileName">User Name</h2>
+                            <p id="profileEmail">user@email.com</p>
+                            <p id="profileLocation" class="profile-location"><i class="fas fa-map-marker-alt"></i> </p>
+                            <span class="badge badge-primary" id="profileRole">Student</span>
+                        </div>
+                    </div>
+                    <div class="profile-details-grid">
+                        <div class="profile-card">
+                            <h3><i class="fas fa-user"></i> About</h3>
+                            <p id="profileBio" class="profile-bio">—</p>
+                        </div>
+                        <div class="profile-card">
+                            <h3><i class="fas fa-chart-bar"></i> Learning Stats</h3>
+                            <div class="profile-stats" id="profileStats"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="#" class="footer-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Skilled Sapiens</span>
+                    </a>
+                    <p>India's premier MBA management learning platform — Finance, Marketing, HR, Strategy &amp; more.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Platform</h4>
+                        <a href="#" onclick="showPage('courses')">Courses</a>
+                        <a href="#" onclick="showPage('dashboard')">Dashboard</a>
+                        <a href="#" onclick="showPage('mentor')">Mentors</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <a href="#">Help Center</a>
+                        <a href="#">Terms</a>
+                        <a href="#">Privacy</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Skilled Sapiens. All rights reserved. | Made in India 🇮🇳</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/courses.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/tasks.js"></script>
+    <script src="js/alerts.js"></script>
+    <script src="js/mentor.js"></script>
+    <script src="js/video-player.js"></script>
+    <script src="js/quiz.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/analytics.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+{
+    "name": "skill-sepian-revamp",
+    "version": "1.0.0",
+    "description": "Skilled Sapiens - E-Learning Platform",
+    "scripts": {
+        "dev": "serve -l 3000",
+        "start": "serve -l 3000"
+    },
+    "keywords": [
+        "education",
+        "learning",
+        "courses"
+    ],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "serve": "^14.2.0"
+    }
+}

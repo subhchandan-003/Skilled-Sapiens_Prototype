@@ -1,0 +1,460 @@
+/* Analytics Styles */
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.analytics-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: var(--transition);
+}
+
+.analytics-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.analytics-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+}
+
+.analytics-data {
+    display: flex;
+    flex-direction: column;
+}
+
+.analytics-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--dark-color);
+}
+
+.analytics-label {
+    font-size: 14px;
+    color: var(--gray-color);
+}
+
+/* Analytics Charts */
+.analytics-charts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.analytics-charts .chart-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+}
+
+.analytics-charts .chart-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 20px;
+}
+
+/* Progress Chart */
+.progress-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.progress-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.progress-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progress-item-header h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+.progress-item-header span {
+    font-size: 13px;
+    color: var(--gray-color);
+}
+
+.progress-item .progress-bar {
+    height: 10px;
+    border-radius: 5px;
+}
+
+.progress-item .progress-fill {
+    border-radius: 5px;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+}
+
+/* Quiz Stats */
+.quiz-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.quiz-stat-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: var(--light-color);
+    border-radius: var(--radius-md);
+}
+
+.quiz-stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.quiz-stat-icon.passed {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--secondary-color);
+}
+
+.quiz-stat-icon.failed {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--danger-color);
+}
+
+.quiz-stat-icon.average {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--warning-color);
+}
+
+.quiz-stat-data h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 4px;
+}
+
+.quiz-stat-data span {
+    font-size: 13px;
+    color: var(--gray-color);
+}
+
+/* Activity Chart */
+.activity-chart {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 24px;
+}
+
+.activity-chart h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 20px;
+}
+
+.chart-bars {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    height: 200px;
+    padding-top: 20px;
+}
+
+.chart-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+}
+
+.chart-bar .bar {
+    width: 40px;
+    background: linear-gradient(180deg, var(--primary-color), var(--primary-light));
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    transition: var(--transition);
+}
+
+.chart-bar:hover .bar {
+    background: var(--primary-dark);
+}
+
+.chart-bar span {
+    font-size: 12px;
+    color: var(--gray-color);
+}
+
+.chart-bar .value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+/* Learning Streak */
+.streak-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 24px;
+}
+
+.streak-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 20px;
+}
+
+.streak-days {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.streak-day {
+    flex: 1;
+    text-align: center;
+    padding: 12px 8px;
+    background: var(--light-color);
+    border-radius: var(--radius-md);
+}
+
+.streak-day.active {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: white;
+}
+
+.streak-day .day {
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.streak-day .status {
+    font-size: 16px;
+}
+
+.streak-day .hours {
+    font-size: 11px;
+    opacity: 0.8;
+}
+
+/* Skill Radar */
+.skill-radar {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+}
+
+.skill-radar h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 20px;
+}
+
+.skill-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.skill-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.skill-name {
+    width: 120px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark-color);
+}
+
+.skill-bar {
+    flex: 1;
+    height: 8px;
+    background: var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.skill-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1s ease;
+}
+
+.skill-fill.html {
+    background: #e34c26;
+}
+
+.skill-fill.css {
+    background: #264de4;
+}
+
+.skill-fill.js {
+    background: #f0db4f;
+}
+
+.skill-fill.react {
+    background: #61dbfb;
+}
+
+.skill-fill.node {
+    background: #68a063;
+}
+
+.skill-percentage {
+    width: 50px;
+    text-align: right;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+/* Time Spent */
+.time-spent {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+}
+
+.time-spent h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 20px;
+}
+
+.time-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.time-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.time-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--light-color);
+    color: var(--primary-color);
+}
+
+.time-details {
+    flex: 1;
+}
+
+.time-details h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 4px;
+}
+
+.time-details span {
+    font-size: 12px;
+    color: var(--gray-color);
+}
+
+.time-hours {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+/* Certificates */
+.certificates-section {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+}
+
+.certificates-section h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 20px;
+}
+
+.certificate-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0.05));
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.certificate-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+}
+
+.certificate-info h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 4px;
+}
+
+.certificate-info p {
+    font-size: 14px;
+    color: var(--gray-color);
+    margin-bottom: 8px;
+}
+
+.certificate-date {
+    font-size: 12px;
+    color: var(--primary-color);
+    font-weight: 500;
+}
